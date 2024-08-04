@@ -11,14 +11,21 @@ def check_turn(turn):
         return 'X'
     else:
         return 'O'
+
 playing = True
 turn = 0
+prev_turn = -1
 while playing:
-
     os.system('cls' if os.name == 'nt' else 'clear')
     draw_board(spots)
+    if prev_turn == turn:
+        print("Spot already fill, please pick other")
+    prev_turn = turn
+    print("Player ", str((turn % 2)+1), "'s turn: pick your spot")
     choice = input()
     if choice == 'q':
         playing = False
-    turn+=1
-    spots[int(choice)] = check_turn(turn)
+    elif str.isdigit(choice) and int(choice) in spots:
+        if not spots[int(choice)] in {'X', 'O'}:
+            turn += 1
+            spots[int(choice)] = check_turn(turn)
