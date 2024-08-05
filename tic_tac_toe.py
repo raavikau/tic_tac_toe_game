@@ -1,4 +1,4 @@
-# Build a two-player Tic-Tac-Toe game
+# Implementation of two-player Tic-Tac-Toe game in Python
 import os
 spots = {1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9'}
 
@@ -6,18 +6,18 @@ def draw_board(spot):
     board = f"|{spot[1]}|{spot[2]}|{spot[3]}|\n|{spot[4]}|{spot[5]}|{spot[6]}|\n|{spot[7]}|{spot[8]}|{spot[9]}|"
     print(board)
 
-def check_turn(player_turn):
+def check_turn(player_turn):  # check player after every move
     if player_turn % 2 == 0:
         return 'X'
     else:
         return 'O'
 def check_for_win(spot):
     if (spot[1] == spot[2] == spot[3]) or (spot[4] == spot[5] == spot[6]) or (spot[7] == spot[8] == spot[9]):
-        return True
+        return True  # Handle horizontal Cases
     elif (spot[1] == spot[4] == spot[7]) or (spot[2] == spot[5] == spot[8]) or (spot[3] == spot[6] == spot[9]):
-        return True
+        return True  # Handle vertical cases
     elif (spot[1] == spot[5] == spot[9]) or (spot[3] == spot[5] == spot[7]):
-        return True
+        return True  # handle diagonal cases
     else:
         return False
 playing, complete = True, False
@@ -26,7 +26,7 @@ prev_turn = -1
 while playing:
     os.system('cls' if os.name == 'nt' else 'clear')
     draw_board(spots)
-    if prev_turn == turn:
+    if prev_turn == turn:  # If an invalid turn occurred, let the player know
         print("Spot already fill, please pick other")
     prev_turn = turn
     print("Player ", str((turn % 2)+1), "'s turn: pick your spot or press 'q' to quit")
@@ -39,11 +39,11 @@ while playing:
             spots[int(choice)] = check_turn(turn)
     if turn > 8:
         playing = False
-    if check_for_win(spots):
+    if check_for_win(spots):  # Check if the game has ended (and if someone won)
         playing = False
         complete = True
 os.system('cls' if os.name == 'nt' else 'clear')
-draw_board(spots)
+draw_board(spots)  # Update the board one last time.
 if complete:
     print("Game Over")
     if check_turn(turn) == 'O':
